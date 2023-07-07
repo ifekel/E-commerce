@@ -1,0 +1,45 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block title %}Contact{% endblock title %}
+
+{% block content %}
+<section class="stockHero"></section>
+
+<div>
+    {% if name %}
+    <h3>Thanks {{ name }}...We've recieved your message and will get back to you shortly...</h3>
+    {% endif %}
+</div>
+
+<section class="contactForm">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-4 bg-primary p-5 bg-dark">
+                    <ul>
+                        <li><b>Address</b></li>
+                        <p>No.4 Alor agu street trans ekulu<br>Enugu, Nigeria.</p>
+                        <li><b>Phone</b></li>
+                        <p>+234 816 200 3904</p>
+                        <li><b>Email</b></li>
+                        <p>pridopestore@gmail.com</p>
+                    </ul>
+                </div>
+                <div class="col-lg-8">
+                    <h2>Get in touch</h2>
+                    <div class="underline"></div>
+                    <form action="contact" method="post">
+                        {% csrf_token %}
+                        <div class="contact-group">
+                            <input type="text" placeholder="Name" name="name">
+                            <input type="email" placeholder="Email" name="email">
+                            <textarea name="message" cols="100" rows="10"></textarea>
+                            <button class="btn btn-dark text-white" type="submit">SEND MESSAGE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

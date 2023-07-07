@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'img/arrow-down.png' %} " type="image/x-icon">
+  <title>PRIDOPE STORE || {% block title %} {% endblock title %}</title>
+
+  <!-- Assets -->
+  <link rel="stylesheet" href="{% static 'bootstrap-icons/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/boxicons/css/boxicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/animate.css/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/aos/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/glightbox/css/glightbox.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <script>
+    let user = '{{ request.user }}';
+
+    function getToken(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    let csrftoken = getToken('csrftoken')
+
+
+    function getCookie(name) {
+      // Split cookie string and get all individual name=value pairs in an array
+      var cookieArr = document.cookie.split(";");
+
+      // Loop through the array elements
+      for (var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+
+        /* Removing whitespace at the beginning of the cookie name
+        and compare it with the given string */
+        if (name == cookiePair[0].trim()) {
+          // Decode the cookie value and return
+          return decodeURIComponent(cookiePair[1]);
+        }
+      }
+
+      // Return null if not found
+      return null;
+    }
+    var cart = JSON.parse(getCookie('cart'))
+
+    if (cart == undefined) {
+      cart = {}
+      console.log('Cart Created!', cart)
+      document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    }
+    console.log('Cart:', cart)
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-dark">
+    <div class="container p-3">
+      <h1 class="logo"><a href="{% url 'store' %}" class="navbar-brand" style="color: white;">PRIDOPE STORE</a></h1>
+
+      <hr>
+      <button class="navbar-toggler" type="button btn-light" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="color: white;"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 h-100 align-items-center w-100 justify-content-end">
+          <li class="nav-item"><a href="{% url 'store' %}" class="nav-link btn" style="border:none; color: white;">
+              Home</a></li>
+          <li class="na v-item"><a href="{% url 'contact' %}" class="nav-link btn" style="border:none; color: white;">
+              Contact</a></li>
+          {% if request.user.is_authenticated %}
+
+          <li class="nav-item"><a href="{% url 'orders' %}" class="nav-link btn" style="border:none; color: white;">
+              Dashboard</a></li>
+          <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link btn" style="border:none; color: white;">
+              Logout</a></li>
+          {% else %}
+          <li class="nav-item"><a href="{% url 'login' %}" class="nav-link btn" style="border:none; color: white;">
+              Login</a></li>
+          <li class="nav-item"><a href="{% url 'register' %}" class="nav-link btn" style="border:none; color: white;">
+              Signup</a></li>
+          {% endif %}
+          <li class="nav-item"><a href="{% url 'cart' %}" class="nav-link btn btn-primary"
+              style="border-radius: 5px;"><img src="{% static 'img/cart.png' %}" width="30" alt=""><span
+                style="padding: 3px; border-radius: 30px; color: white;">{{ cartItems}}</span></a></li>
+
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <br>
+    {% block content %}
+
+
+    {% endblock content %}
+  </div>
+
+
+
+  <!-- <footer id="footer" class="footer fixed-bottom">
+    <div class="footer-legal text-center position-relative">
+      <div class="container-fluid">
+        <div class="copyright">
+          &copy; Copyright <strong><span>PRIDOPE STORE</span></strong>. All Rights Reserved
+        </div>
+      </div>
+    </div>
+
+  </footer> -->
+  <!-- End Footer -->
+
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <!-- <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script> -->
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+  <script src="{% static 'main.js' %}"></script>
+</body>
+
+</html>

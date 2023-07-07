@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pridope Store | {{ products.name }}</title>
+
+
+
+    <!-- Assets -->
+    <link rel="stylesheet" href="{% static 'bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/boxicons/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/aos/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/glightbox/css/glightbox.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <header class="bg-dark">
+        <div class="product_name">
+            <h2 class="text-white"><strong>Pridope Store</strong></h2>
+        </div>
+        <div class="breadcrumbs-home">
+            <p><span><a href="{% url 'store' %}">Home</a></span> / Product Details</p>
+        </div>
+    </header>
+
+    <div class="productCardDescription">
+        <div class="productCard productCardItem">
+            <img class="thumbnail product_img_imp" src="{{ product.imageURL }}" alt="">
+        </div>
+        <div class="productCardItemDescription">
+            <h2>{{ product.name }}</h2>
+            <hr>
+            <p>{{ product.label }}</p>
+            <ul>
+                <p><strong>Category</strong>: {{ product.category }}</p>
+            </ul>
+            <hr>
+
+        </div>
+
+
+        <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+        <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+        <!-- <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script> -->
+        <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+        <script src="{% static 'main.js' %}"></script>
+</body>
+
+</html>

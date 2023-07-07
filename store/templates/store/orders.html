@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pridope Store | Admin</title>
+
+    <!-- Assets -->
+    <link rel="stylesheet" href="{% static 'bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/boxicons/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/aos/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/glightbox/css/glightbox.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-dark">
+        <div class="container p-3">
+            <h1 class="logo"><a href="{% url 'store' %}" class="navbar-brand" style="color: white;">PRIDOPE STORE</a>
+            </h1>
+            <hr>
+            <button class="navbar-toggler" type="button btn-light" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="color: white;"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 h-100 align-items-center w-100 justify-content-end">
+                    <li class="nav-item"><a href="{% url 'store' %}" class="nav-link btn"
+                            style="border:none; color: white;"> Visit store</a></li>
+                    <li class="nav-item"><a href="/password_change/" class="nav-link btn"
+                            style="border:none; color: white;"> Change Password</a></li>
+                    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link btn"
+                            style="border:none; color: white;"> Logout</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link btn ppo"
+                            style="border:none; color: white;">Pages</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="adminPanel">
+        <div class="sideMenu">
+            <h3><i class="bi bi-x-lg closeSm" style="font-weight: 800; float: right; margin-bottom: 5px;"></i></h3>
+            <a href="{% url 'orders' %}" class="navSide" style="margin-bottom: 20px;">
+                <div class="productMenu">
+                    <button class="dropbtn">Dashboard</button>
+                </div>
+            </a>
+            <div class="navSide cki" style="margin-bottom: 20px;">
+                <div class="productMenu">
+                    <button class="dropbtn">Products
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="productMenu-content">
+                        <a href="{% url 'create' %}">Add product</a>
+                        <a href="{% url 'productList' %}">Product List</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <a href="{% url 'customers' %}" class="navSide">
+                <div class="productMenu">
+                    <button class="dropbtn">Customers</button>
+                </div>
+            </a>
+        </div>
+
+        <div class="adminBody">
+            <div class="productGrid order-page">
+                <div class="row">
+
+                    <div class="col-lg-12 order-item bg-light colll">
+                        <h3>Orders Recieved</h3>
+                        <table class="table table-dark table-striped order-table">
+                            <tr>
+                                <th>Customer</th>
+                                <th>Email Address</th>
+                                <th>Completed</th>
+                                <th>Transaction ID</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                            {% for order in order %}
+                            {% if order.complete == True %}
+                            <tr>
+                                <td>{{ order.customer }}</td>
+                                <td>{{ order.customer.email }}</td>
+                                {% if order.complete == True %}
+                                <td>Yes</td>
+                                {% else %}
+                                <td>No</td>
+                                {% endif %}
+                                <td>{{ order.transaction_id }}</td>
+                                <td>{{ order.date_ordered }}</td>
+                                <td><a href="{% url 'deleteOrder' order.id %}" class="btn btn-danger"
+                                        style="border-radius: 5px;"><i class="bi bi-trash-fill"></i></a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <div class="col-lg-12 order-item bg-light">
+                        <h3>Products ordered</h3>
+                        <table class="table table-dark table-striped">
+                            <tr>
+                                <th>Order</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Date</th>
+                            </tr>
+                            {% for orderitem in orderItems %}
+                            <tr>
+                                <td>{{ orderitem.order }}</td>
+                                <td><img class="productIm" src="{{ orderitem.product.imageURL }}" alt="">
+                                    {{orderitem.product }} </td>
+                                <td>{{ orderitem.quantity }}</td>
+                                <td>{{ orderitem.date_added }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <div class="col-lg-12 order-item bg-light poip">
+                        <h3>Shipping Info</h3>
+                        <table class="table table-dark table-striped">
+                            <tr>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Zipcode</th>
+                                <th>Date</th>
+                            </tr>
+                            {% for shipping in shipping %}
+                            <tr>
+                                <td>{{ shipping.customer }}</td>
+                                <td>{{ shipping.address }}</td>
+                                <td>{{ shipping.city }}</td>
+                                <td>{{ shipping.state }}</td>
+                                <td>{{ shipping.zipcode }}</td>
+                                <td>{{ shipping.date_added }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+    <script src="{% static 'main.js' %}"></script>
+</body>
+
+</html>

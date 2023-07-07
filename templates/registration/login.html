@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIDOPE STORE || Admin Login</title>
+
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div class="loginBody">
+        <form method="post">
+            {% csrf_token %}
+            <a href="{% url 'store' %}" class="btn text-white" style="margin-bottom: 20px"><b><u>Go back</u></b></a>
+            {{ form.as_p }}
+            <p><a href="{% url 'password_reset' %}" style="color: white; text-decoration: none; font-weight: 800;">Forgot Password</a></p>
+            <div class="form-group-submit">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
